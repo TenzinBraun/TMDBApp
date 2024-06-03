@@ -9,6 +9,7 @@ class MoviesConsumerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var test = ref.watch(movieListProvider);
     return ref.watch(movieListProvider).when(
           data: (event) => LoadedMovies(
             movies: event,
