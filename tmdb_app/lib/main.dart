@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  // Ensure all widgets are properly initialized before running the app
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load the .env file
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
