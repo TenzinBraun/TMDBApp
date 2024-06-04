@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tmdb_app/ui/screens/home/_movies_consumer_widget.dart';
+import 'package:tmdb_app/ui/widgets/bottom_app_bar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: MoviesConsumerWidget(),
       ),
+      bottomNavigationBar: BottomAppBarWidget(),
     );
   }
 }

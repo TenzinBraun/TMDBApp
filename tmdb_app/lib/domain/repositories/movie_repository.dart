@@ -6,5 +6,5 @@ abstract interface class MovieRepository {
 
   Future<List<Movie>> getMovies();
 
-  Future<Movie> setMovieAsFavorite(Movie movie);
+  Future<void> setMovieAsFavorite(Movie movie);
 }

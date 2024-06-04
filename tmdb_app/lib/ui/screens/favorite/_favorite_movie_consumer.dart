@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tmdb_app/ui/screens/home/___movie_item_holder.dart';
 
 import '../../providers/movie_provider.dart';
-import '___movie_item_holder.dart';
 
-class MoviesConsumerWidget extends ConsumerWidget {
-  const MoviesConsumerWidget({super.key});
+class FavoriteMovieConsumer extends ConsumerWidget {
+  const FavoriteMovieConsumer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var movies = ref.watch(movieListProvider);
+    final movies = ref.watch(favoriteMoviesProvider);
+
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -18,7 +18,7 @@ class MoviesConsumerWidget extends ConsumerWidget {
             (context, index) => MovieItemHolder(movie: movies[index]),
             childCount: movies.length,
           ),
-        ),
+        )
       ],
     );
   }

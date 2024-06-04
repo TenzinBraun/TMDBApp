@@ -12,14 +12,24 @@ class MovieRepositoryImpl implements MovieRepository {
 
   @override
   Future<List<Movie>> getMovies() async {
-    final List<MovieModel> movieModels = await movieDatasource.fetchMovies();
-    movies = movieModels.map((e) => Movie.copyWith(e)).toList();
+    if (movies.isEmpty) {
+      final List<MovieModel> movieModels = await movieDatasource.fetchMovies();
+      movies = movieModels
+          .map((e) => Movie(
+              id: e.id,
+              title: e.title,
+              overview: e.overview,
+              posterPath: e.posterPath))
+          .toList();
+    }
     return movies;
   }
 
   @override
-  Future<Movie> setMovieAsFavorite(Movie movie) async {
-    return movies.firstWhere((e) => e.id == movie.id)
-      ..isFavorite = !movies.firstWhere((e) => e.id == movie.id).isFavorite;
+  Future<void> setMovieAsFavorite(Movie movie) async {
+    final index = movies.indexWhere((m) => m.id == movie.id);
+    if (index != -1) {
+      movies[index] = movies[index].copyWith(isFavorite: !movie.isFavorite);
+    }
   }
 }

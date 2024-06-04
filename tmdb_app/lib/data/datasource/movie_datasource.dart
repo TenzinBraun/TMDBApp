@@ -26,7 +26,7 @@ class MovieDatasource extends BaseDatasource {
       final dioResponse =
           await client.get(featuredRoute, queryParameters: queryParameters);
       final pageMovieModel = PageMovieModel.fromJson(dioResponse.data);
-      return pageMovieModel.results;
+      return pageMovieModel.results.take(10).toList();
     } catch (e) {
       return [];
     }

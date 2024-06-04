@@ -11,19 +11,17 @@ class FavoriteWidgetConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieUseCases = ref.watch(movieUseCaseProvider);
+    final movieListNotifier = ref.watch(movieListProvider.notifier);
 
     return IconButton(
       onPressed: () async {
-        await movieUseCases.setFavoriteMovie(movie);
+        await movieListNotifier.setFavorite(movie);
       },
-      icon: movie.isFavorite
-          ? const Icon(
-              Icons.favorite_rounded,
-            )
-          : const Icon(
-              Icons.favorite_border_rounded,
-            ),
+      icon: Icon(
+        movie.isFavorite
+            ? Icons.favorite_rounded
+            : Icons.favorite_border_rounded,
+      ),
     );
   }
 }

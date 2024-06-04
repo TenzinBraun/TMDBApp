@@ -39,8 +39,8 @@ class MovieItemHolder extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Text(
-                      movie.overview.length > 255
-                          ? "${movie.overview.substring(0, 255)}... voir plus"
+                      movie.overview.length > 225
+                          ? "${movie.overview.substring(0, 225)}... voir plus"
                           : movie.overview,
                       textAlign: TextAlign.justify,
                     ),

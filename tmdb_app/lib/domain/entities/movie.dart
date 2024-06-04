@@ -15,11 +15,19 @@ class Movie {
     this.isFavorite = false,
   });
 
-  factory Movie.copyWith(MovieModel copy) => Movie(
-        id: copy.id,
-        title: copy.title,
-        overview: copy.overview,
-        posterPath: copy.posterPath,
-        isFavorite: false,
-      );
+  Movie copyWith({
+    int? id,
+    String? title,
+    String? overview,
+    String? posterPath,
+    bool? isFavorite,
+  }) {
+    return Movie(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      overview: overview ?? this.overview,
+      posterPath: posterPath ?? this.posterPath,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }

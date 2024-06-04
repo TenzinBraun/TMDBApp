@@ -1,13 +1,15 @@
+import 'package:tmdb_app/domain/usecases/movies/movie_usecase.dart';
 
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
 
-
-class GetMovies {
+class GetMovies implements UseCase<List<Movie>, NoParams> {
   final MovieRepository movieRepository;
+
   GetMovies({required this.movieRepository});
 
-  Future<List<Movie>> call() async {
+  @override
+  Future<List<Movie>> call(NoParams params) async {
     return await movieRepository.getMovies();
   }
 }
