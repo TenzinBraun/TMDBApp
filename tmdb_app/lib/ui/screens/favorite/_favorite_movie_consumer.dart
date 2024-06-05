@@ -1,13 +1,12 @@
-part of 'home_screen.dart';
+part of 'favorite_screen.dart';
 
-
-class LoadedMovies extends StatelessWidget {
-  const LoadedMovies({super.key, required this.movies});
-
-  final List<Movie> movies;
+class FavoriteMovieConsumer extends ConsumerWidget {
+  const FavoriteMovieConsumer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final movies = ref.watch(favoriteMoviesProvider);
+
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -15,7 +14,7 @@ class LoadedMovies extends StatelessWidget {
             (context, index) => MovieItemHolder(movie: movies[index]),
             childCount: movies.length,
           ),
-        ),
+        )
       ],
     );
   }

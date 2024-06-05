@@ -1,26 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+part of 'home_screen.dart';
 
-import '../../providers/movie_provider.dart';
-import '__loaded_movies.dart';
 
 class MoviesConsumerWidget extends ConsumerWidget {
   const MoviesConsumerWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(movieListProvider).when(
-          data: (event) => LoadedMovies(
-            movies: event,
+    var movies = ref.watch(movieListProvider);
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => MovieItemHolder(movie: movies[index]),
+            childCount: movies.length,
           ),
-          error: (err, stackTrace) => const Center(
-            child: Text("Oups something wrong happenend"),
-          ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
+        ),
+      ],
+    );
   }
 }
-
-
