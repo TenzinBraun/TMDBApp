@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_app/services/env_service.dart';
 
 import 'config/navigation/app_routing.dart';
+import 'services/env_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
