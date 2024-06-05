@@ -3,7 +3,7 @@ import '../../data/datasource/movie_datasource.dart';
 import '../../data/repositories/movie_repository_impl.dart';
 import '../../domain/entities/movie.dart';
 import '../../domain/usecases/movies/get_movies.dart';
-import '../../domain/usecases/movies/movie_usecase.Dart';
+import '../../domain/usecases/movies/movie_usecase.dart';
 import '../../domain/usecases/movies/set_favorite_movie.dart';
 
 final movieDataSourceProvider = Provider<MovieDatasource>(
