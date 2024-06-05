@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'config/navigation/app_routing.dart';
+import 'services/env_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EnvService.loadEnvApiKey();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +22,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: "/",
+      initialRoute: AppRouting.home,
+      onGenerateRoute: AppRouting.onGenerateRoute,
     );
   }
 }
