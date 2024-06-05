@@ -1,18 +1,17 @@
 part of 'home_screen.dart';
 
-
 class FavoriteWidgetConsumer extends ConsumerWidget {
-  const FavoriteWidgetConsumer(this.movie, {super.key});
+  const FavoriteWidgetConsumer(
+      {super.key, required this.movie, required this.fromRoute});
 
   final Movie movie;
+  final String fromRoute;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieListNotifier = ref.watch(movieListProvider.notifier);
-
     return IconButton(
       onPressed: () async {
-        await movieListNotifier.setFavorite(movie);
+        ref.read(movieProvider.notifier).setFavorite(movie, fromRoute);
       },
       icon: Icon(
         movie.isFavorite

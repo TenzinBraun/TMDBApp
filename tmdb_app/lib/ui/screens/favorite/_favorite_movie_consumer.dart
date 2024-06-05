@@ -5,17 +5,15 @@ class FavoriteMovieConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movies = ref.watch(favoriteMoviesProvider);
+    ref.read(movieProvider.notifier).getFavoriteMovies();
 
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => MovieItemHolder(movie: movies[index]),
-            childCount: movies.length,
-          ),
-        )
-      ],
-    );
+    return AsyncNotifierBuilder(
+        notifierProvider: movieProvider,
+        builder: (context, state) {
+          if (state is LoadedMoviesState) {
+            return LoadedMovies(movies: state.movies, fromRoute: AppRouting.favorite);
+          }
+          return const SizedBox();
+        });
   }
 }
