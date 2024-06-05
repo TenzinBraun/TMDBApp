@@ -37,12 +37,12 @@ The app uses [Dio](https://pub.dev/packages/dio) for making HTTP requests to the
 
 1. Clone the repository:
 ```sh
-   git clone https://github.com/your-username/tmdb-movies-app.git
+   git clone git@github.com:TenzinBraun/TMDBApp.git
 ```
 
 2. Get dependencies:
 ```sh
-   git clone https://github.com/your-username/tmdb-movies-app.git
+   flutter pub get
 ```
 
 3. Create a .env file:
@@ -64,7 +64,7 @@ In config/http/app_client.dart replace "YOUR API KEY"
 
 6. Run the App 
 ```sh
-  flutter pub get && flutter run
+  flutter run
 ```
 ## Contact 
 Feel free to contact me if you have any questions regarding the app and its development. 
