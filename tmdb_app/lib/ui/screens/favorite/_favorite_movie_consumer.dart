@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_app/ui/screens/home/___movie_item_holder.dart';
-
-import '../../providers/movie_provider.dart';
+part of 'favorite_screen.dart';
 
 class FavoriteMovieConsumer extends ConsumerWidget {
   const FavoriteMovieConsumer({super.key});

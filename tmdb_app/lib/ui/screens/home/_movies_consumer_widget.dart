@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+part of 'home_screen.dart';
 
-import '../../providers/movie_provider.dart';
-import '___movie_item_holder.dart';
 
 class MoviesConsumerWidget extends ConsumerWidget {
   const MoviesConsumerWidget({super.key});

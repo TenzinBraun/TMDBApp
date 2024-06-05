@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_app/ui/widgets/bottom_app_bar_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '_favorite_movie_consumer.dart';
+import '../../providers/movie_provider.dart';
+import '../../widgets/bottom_app_bar_widget.dart';
+import '../home/home_screen.dart';
+
+part '_favorite_movie_consumer.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});

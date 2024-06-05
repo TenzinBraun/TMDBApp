@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_app/config/navigation/app_routing.dart';
+
+import '../../config/navigation/app_routing.dart';
 
 class NavigationState {
   final int index;

@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+part of 'home_screen.dart';
 
-import '../../../domain/entities/movie.dart';
-import '../../providers/movie_provider.dart';
 
 class FavoriteWidgetConsumer extends ConsumerWidget {
   const FavoriteWidgetConsumer(this.movie, {super.key});

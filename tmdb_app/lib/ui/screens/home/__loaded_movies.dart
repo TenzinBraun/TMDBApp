@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:tmdb_app/ui/screens/home/___movie_item_holder.dart';
+part of 'home_screen.dart';
 
-import '../../../domain/entities/movie.dart';
 
 class LoadedMovies extends StatelessWidget {
   const LoadedMovies({super.key, required this.movies});

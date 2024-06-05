@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_app/ui/screens/favorite/favorite_screen.dart';
 
+import '../../ui/screens/favorite/favorite_screen.dart';
 import '../../ui/screens/home/home_screen.dart';
 
 class AppRouting {

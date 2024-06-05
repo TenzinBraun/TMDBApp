@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_app/config/navigation/app_routing.dart';
+
+import 'config/navigation/app_routing.dart';
 
 void main() async {
   // Ensure all widgets are properly initialized before running the app
