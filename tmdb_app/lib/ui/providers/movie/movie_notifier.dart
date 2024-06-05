@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_app/domain/entities/movie.dart';
-import 'package:tmdb_app/domain/usecases/movies/movie_usecase.dart';
-import 'package:tmdb_app/ui/providers/movie_provider.dart';
 
 import '../../../config/navigation/app_routing.dart';
+import '../../../domain/entities/movie.dart';
+import '../../../domain/usecases/movies/get_favorite_movies.dart';
+import '../../../domain/usecases/movies/get_movies.dart';
+import '../../../domain/usecases/movies/movie_use_case.dart';
+import '../../../domain/usecases/movies/set_favorite_movie.dart';
+import '../../../domain/usecases/use_case.dart';
+import 'movie_provider.dart';
 
 abstract class MovieState {}
 
@@ -21,14 +25,14 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   List<Movie> movies = [];
   List<Movie> favoriteMovies = [];
 
+  MovieUseCase get movieUseCase => ref.read(movieUseCaseProvider);
+
   @override
-  FutureOr<MovieState> build() {
-    return InitialMovieState();
-  }
+  FutureOr<MovieState> build() => InitialMovieState();
 
   FutureOr<void> getMovies() async {
     state = await AsyncValue.guard<LoadedMoviesState>(() async {
-      movies = await ref.read(getMoviesUseCaseProvider)(NoParams());
+      movies = await movieUseCase.call<GetMovies, NoParams>(NoParams());
       return LoadedMoviesState(
         movies: movies,
       );
@@ -38,7 +42,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   FutureOr<void> getFavoriteMovies() async {
     state = await AsyncValue.guard<LoadedMoviesState>(() async {
       favoriteMovies =
-          await ref.read(getFavoriteMoviesUseCaseProvider)(NoParams());
+          await movieUseCase.call<GetFavoriteMovies, NoParams>(NoParams());
       return LoadedMoviesState(
         movies: favoriteMovies,
       );
@@ -46,7 +50,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   }
 
   FutureOr<void> setFavorite(Movie movie, String from) async {
-    await ref.read(setFavoriteUseCaseProvider)(movie);
+    await movieUseCase.call<SetFavoriteMovie, Movie>(movie);
     if (from == AppRouting.home) {
       await getMovies();
     } else {

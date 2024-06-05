@@ -8,10 +8,17 @@ class FavoriteMovieConsumer extends ConsumerWidget {
     ref.read(movieProvider.notifier).getFavoriteMovies();
 
     return AsyncNotifierBuilder(
-        notifierProvider: movieProvider,
+        provider: movieProvider,
         builder: (context, state) {
           if (state is LoadedMoviesState) {
-            return LoadedMovies(movies: state.movies, fromRoute: AppRouting.favorite);
+            if (state.movies.isEmpty) {
+              return const Center(
+                child: Text(
+                    "Vous pouvez enregistrer les films qui vous plaisent depuis l'onglet 'Films'", textAlign: TextAlign.center,),
+              );
+            }
+            return LoadedMovies(
+                movies: state.movies, fromRoute: AppRouting.favorite);
           }
           return const SizedBox();
         });

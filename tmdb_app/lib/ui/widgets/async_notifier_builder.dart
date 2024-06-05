@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AsyncNotifierBuilder<Notifier extends AsyncNotifier<State>, State>
     extends ConsumerWidget {
-  final AsyncNotifierProvider<Notifier, State> notifierProvider;
+  final AsyncNotifierProvider<Notifier, State> provider;
 
   const AsyncNotifierBuilder({
     super.key,
-    required this.notifierProvider,
+    required this.provider,
     required this.builder,
   });
 
@@ -15,7 +15,7 @@ class AsyncNotifierBuilder<Notifier extends AsyncNotifier<State>, State>
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(notifierProvider).when(
+    return ref.watch(provider).when(
         data: (data) {
           return builder(context, data);
         },

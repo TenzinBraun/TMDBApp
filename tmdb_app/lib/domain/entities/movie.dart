@@ -1,8 +1,10 @@
+import 'package:tmdb_app/domain/usecases/use_case.dart';
+
 /// This class represent the movie feature.
 ///
 /// See also
 ///  - [copyWith] method.
-class Movie {
+class Movie implements UseCaseParams {
   /// The id of the [Movie]
   final int id;
 
@@ -30,7 +32,6 @@ class Movie {
     required this.posterPath,
     this.isFavorite = false,
   });
-
 
   /// A method that allows us to create a new referenced [Movie] object
   /// from named parameters.

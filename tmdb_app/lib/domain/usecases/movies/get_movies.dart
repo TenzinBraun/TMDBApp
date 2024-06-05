@@ -1,7 +1,7 @@
 
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
-import 'movie_usecase.dart';
+import '../use_case.dart';
 
 /// A class with the only purpose of retrieving movies through [MovieRepository].
 ///
