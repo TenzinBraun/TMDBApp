@@ -1,10 +1,14 @@
 part of 'home_screen.dart';
 
-
 class LoadedMovies extends StatelessWidget {
-  const LoadedMovies({super.key, required this.movies});
+  const LoadedMovies({
+    super.key,
+    required this.movies,
+    required this.fromRoute,
+  });
 
   final List<Movie> movies;
+  final String fromRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,10 @@ class LoadedMovies extends StatelessWidget {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (context, index) => MovieItemHolder(movie: movies[index]),
+            (context, index) => MovieItemHolder(
+              movie: movies[index],
+              fromRoute: fromRoute,
+            ),
             childCount: movies.length,
           ),
         ),
