@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tmdb_app/domain/usecases/movies/show_detail_movie.dart';
 
 import '../../../config/navigation/app_routing.dart';
 import '../../../domain/entities/movie.dart';
@@ -21,9 +22,16 @@ class LoadedMoviesState extends MovieState {
   LoadedMoviesState({required this.movies});
 }
 
+class ShowDetailState extends MovieState {
+  final Movie movie;
+
+  ShowDetailState({required this.movie});
+}
+
 class MovieNotifier extends AsyncNotifier<MovieState> {
   List<Movie> movies = [];
   List<Movie> favoriteMovies = [];
+  String lastRoute = AppRouting.home;
 
   MovieUseCase get movieUseCase => ref.read(movieUseCaseProvider);
 
@@ -52,6 +60,22 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   FutureOr<void> setFavorite(Movie movie, String from) async {
     await movieUseCase.call<SetFavoriteMovie, Movie>(movie);
     if (from == AppRouting.home) {
+      await getMovies();
+    } else {
+      await getFavoriteMovies();
+    }
+  }
+
+  FutureOr<void> showDetailMovie(Movie movie, String fromRoute) async {
+    lastRoute = fromRoute;
+    state = await AsyncValue.guard<ShowDetailState>(() async {
+      movie = await movieUseCase.call<ShowDetailMovie, Movie>(movie);
+      return ShowDetailState(movie: movie);
+    });
+  }
+
+  FutureOr<void> popBack() async {
+    if (lastRoute == AppRouting.home) {
       await getMovies();
     } else {
       await getFavoriteMovies();

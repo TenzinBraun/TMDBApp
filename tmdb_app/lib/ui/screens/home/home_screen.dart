@@ -5,6 +5,7 @@ import 'package:tmdb_app/domain/usecases/use_case.dart';
 import 'package:tmdb_app/ui/providers/movie/movie_notifier.dart';
 import 'package:tmdb_app/ui/widgets/async_notifier_builder.dart';
 
+import '../../../config/http/app_client.dart';
 import '../../../domain/entities/movie.dart';
 import '../../providers/movie/movie_provider.dart';
 import '../../widgets/bottom_app_bar_widget.dart';
