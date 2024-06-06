@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:tmdb_app/domain/usecases/movies/show_detail_movie.dart';
+
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
 import '../use_case.dart';
@@ -26,6 +28,8 @@ class MovieUseCase {
         GetFavoriteMovies(movieRepository: repository)(NoParams()),
       SetFavoriteMovie =>
         SetFavoriteMovie(movieRepository: repository)(params as Movie),
+      ShowDetailMovie =>
+          ShowDetailMovie(movieRepository: repository)(params as Movie),
       _ => GetMovies(movieRepository: repository)(NoParams()),
     };
   }

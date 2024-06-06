@@ -30,5 +30,9 @@ abstract class MovieRepository
   /// @return: return a [Future] void
   Future<void> update(Movie movie);
 
+  /// A method that return the detail of a [Movie] selected
+  /// @params: [movie],  the [Movie] selected
+  /// @return: return a [Future] of [Movie]
+  Future<Movie> getMovieDetail(Movie params);
 
 }

@@ -9,7 +9,8 @@ class AppClient {
     "Accept": "application/json",
     "Authorization": token,
   };
-  static const String baseUrl = "https://api.themoviedb.org/3/discover";
+  static const String baseUrl = "https://api.themoviedb.org/3";
+  static const String imageUrl = "https://image.tmdb.org/t/p/w500";
 
   static Dio get dio {
     Dio dio = Dio();

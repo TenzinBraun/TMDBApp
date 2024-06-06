@@ -1,5 +1,3 @@
-import 'package:tmdb_app/data/database/movie_database.dart';
-
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasource/base_datasource.dart';
@@ -125,6 +123,7 @@ class MovieRepositoryImpl extends MovieRepository {
     return await database.setMovie(movieModel);
   }
 
+
   @override
   Future<List<Movie>> getFavoriteMovies() async {
     return (await database.getMovies())
@@ -136,5 +135,20 @@ class MovieRepositoryImpl extends MovieRepository {
               isFavorite: true,
             ))
         .toList();
+  }
+
+  /// A method that retrieve the detail of a [Movie]
+  ///
+  /// @params: a [Movie]
+  /// @return: a Future of [Movie]
+  @override
+  Future<Movie> getMovieDetail(Movie params) async {
+    var model = (await datasource.getMovieDetail(params));
+    return Movie(
+      id: model.id,
+      title: model.title,
+      overview: model.overview,
+      posterPath: model.posterPath,
+    );
   }
 }
