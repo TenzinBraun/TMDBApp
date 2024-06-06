@@ -1,3 +1,5 @@
+import 'package:tmdb_app/data/database/movie_database.dart';
+
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasource/base_datasource.dart';
@@ -11,20 +13,28 @@ import '../model/movie/movie_model.dart';
 ///  - [datasource] properties.
 ///  - [movies] properties.
 ///  - [getMovies] method.
-///  - [setMovieAsFavorite] method.
-class MovieRepositoryImpl implements MovieRepository {
-  /// the datasource that handles API logic.
-  final BaseDatasource datasource;
-
+///  - [update] method.
+class MovieRepositoryImpl extends MovieRepository {
   /// A list of [Movie] that represents the current referenced data processed by the App
   List<Movie> movies = [];
 
-  MovieRepositoryImpl({required this.datasource});
+  /// A list of [Movie] that represents the favorite movies stored by the user
+  List<Movie> favoriteMovies = [];
 
-  /// A method that get movies from the [datasource]
-  /// and normalize api models to app entities.
+  MovieRepositoryImpl({required super.datasource, required super.database});
+
+  /// A method that retrieve all the [Movie]
   ///
-  /// Stores the normalized object inside [movies]
+  /// Get all the [MovieModel] from [database]
+  ///
+  /// Check if local [movies] are empty.
+  /// True: fetch the list of [MovieModel] from [datasource]
+  /// normalize [MovieModel] to [Movie] with [Movie.isFavorite] to true
+  /// when the current [MovieModel] processed from the [datasource] has a matching id
+  /// in the [database].
+  /// False:
+  /// update [Movie.isFavorite] from [movies] from corresponding id in [database]
+  ///
   ///
   /// @params: empty.
   /// @return: a [Future] list of [Movie].
@@ -34,6 +44,10 @@ class MovieRepositoryImpl implements MovieRepository {
   ///  - [Movie.copyWith] method.
   @override
   Future<List<Movie>> getMovies() async {
+    List<MovieModel> favoriteMovieModels = [];
+    try {
+      favoriteMovieModels = await database.getMovies();
+    } catch (_) {}
     if (movies.isEmpty) {
       final List<MovieModel> movieModels = await datasource.fetchMovies();
       movies = movieModels
@@ -41,7 +55,30 @@ class MovieRepositoryImpl implements MovieRepository {
               id: e.id,
               title: e.title,
               overview: e.overview,
-              posterPath: e.posterPath))
+              posterPath: e.posterPath,
+              isFavorite:
+                  favoriteMovieModels.where((fm) => e.id == fm.id).isNotEmpty))
+          .toList();
+      favoriteMovies = favoriteMovieModels
+          .map(
+            (e) => Movie(
+              id: e.id,
+              title: e.title,
+              overview: e.overview,
+              posterPath: e.posterPath,
+              isFavorite: true,
+            ),
+          )
+          .toList();
+    } else {
+      movies = movies
+          .map((e) => Movie(
+              id: e.id,
+              title: e.title,
+              overview: e.overview,
+              posterPath: e.posterPath,
+              isFavorite:
+                  favoriteMovieModels.where((fm) => e.id == fm.id).isNotEmpty))
           .toList();
     }
     return movies;
@@ -49,8 +86,10 @@ class MovieRepositoryImpl implements MovieRepository {
 
   /// A method that set a movie as favorite.
   ///
-  /// Find the [index] of the [movie] marked as favorite.
-  /// Update the [movies] at [index] with [Movie.isFavorite] as its opposite
+  /// Retrieve all the [Movie] from [database].
+  /// Check if the movie is already stored
+  /// True: delete the [Movie] as it implies the user unselected it
+  /// False: Add the [Movie] in the database
   ///
   /// @params: a [movie] of [Movie].
   /// @return: a [Future].
@@ -58,10 +97,44 @@ class MovieRepositoryImpl implements MovieRepository {
   /// See also
   ///  - [Movie.copyWith] method.
   @override
-  Future<void> setMovieAsFavorite(Movie movie) async {
-    final index = movies.indexWhere((m) => m.id == movie.id);
-    if (index != -1) {
-      movies[index] = movies[index].copyWith(isFavorite: !movie.isFavorite);
+  Future<void> update(Movie movie) async {
+    final MovieModel movieModel = MovieModel(
+      id: movie.id,
+      title: movie.title,
+      overview: movie.overview,
+      posterPath: movie.posterPath,
+    );
+
+    var favoriteMoviesStored = (await database.getMovies())
+        .map((e) => Movie(
+              id: e.id,
+              title: e.title,
+              overview: e.overview,
+              posterPath: e.posterPath,
+              isFavorite: true,
+            ))
+        .toList();
+
+    final bool isMovieStored =
+        favoriteMoviesStored.where((e) => e.id == movie.id).isNotEmpty;
+
+    if (isMovieStored) {
+      await database.remove(movieModel);
+      return;
     }
+    return await database.setMovie(movieModel);
+  }
+
+  @override
+  Future<List<Movie>> getFavoriteMovies() async {
+    return (await database.getMovies())
+        .map((e) => Movie(
+              id: e.id,
+              title: e.title,
+              overview: e.overview,
+              posterPath: e.posterPath,
+              isFavorite: true,
+            ))
+        .toList();
   }
 }

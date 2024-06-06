@@ -1,10 +1,14 @@
 part of 'home_screen.dart';
 
-
 class MovieItemHolder extends StatelessWidget {
-  const MovieItemHolder({super.key, required this.movie});
+  const MovieItemHolder({
+    super.key,
+    required this.movie,
+    required this.fromRoute,
+  });
 
   final Movie movie;
+  final String fromRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,10 @@ class MovieItemHolder extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(child: Text(movie.title)),
-                      FavoriteWidgetConsumer(movie),
+                      FavoriteWidgetConsumer(
+                        movie: movie,
+                        fromRoute: fromRoute,
+                      ),
                     ],
                   ),
                   Padding(

@@ -1,6 +1,6 @@
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
-import 'movie_usecase.dart';
+import '../use_case.dart';
 
 
 /// A class with the only purpose of setting a favorite movie
@@ -25,6 +25,6 @@ class SetFavoriteMovie implements UseCase<void, Movie> {
   /// - @return: A [Future] that completes with a void return.
   @override
   Future<void> call(Movie params) {
-      return movieRepository.setMovieAsFavorite(params);
+      return movieRepository.update(params);
   }
 }
