@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tmdb_app/data/database/base_database.dart';
 
-import '../model/movie/movie_model.dart';
+import '../../model/movie/movie_model.dart';
+import '../base_database.dart';
 
-class MovieDatabase extends BaseDatabase {
+class TVShowDatabase extends BaseDatabase {
   @override
-  String get featuredKey => "favorite_movie";
+  String get featuredKey => "favorite_tv_show";
+
 
   @override
   Future<List<MovieModel>> getMovies() async {

@@ -1,5 +1,5 @@
 import '../../entities/movie.dart';
-import '../../repositories/movie_repository.dart';
+import '../../repositories/movie/movie_repository.dart';
 import '../use_case.dart';
 
 

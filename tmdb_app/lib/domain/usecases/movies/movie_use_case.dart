@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:tmdb_app/domain/usecases/movies/show_detail_movie.dart';
 
 import '../../entities/movie.dart';
-import '../../repositories/movie_repository.dart';
+import '../../repositories/movie/movie_repository.dart';
 import '../use_case.dart';
 import 'get_favorite_movies.dart';
 import 'get_movies.dart';

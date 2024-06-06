@@ -1,11 +1,17 @@
-part of 'home_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MoviesConsumerWidget extends ConsumerWidget {
-  const MoviesConsumerWidget({super.key});
+import '../../../config/navigation/app_routing.dart';
+import '../../providers/shared/shared_provider.dart';
+import '../../widgets/async_notifier_builder.dart';
+import '../home/home_screen.dart';
+
+class TvShowConsumerWidget extends ConsumerWidget {
+  const TvShowConsumerWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(movieProvider.notifier).getMovies<Movies>();
+    ref.read(movieProvider.notifier).getMovies<Series>();
     return AsyncNotifierBuilder<MovieNotifier, MovieState>(
       provider: movieProvider,
       builder: (context, state) {

@@ -1,7 +1,7 @@
-import '../../domain/entities/movie.dart';
-import '../../domain/repositories/movie_repository.dart';
-import '../datasource/base_datasource.dart';
-import '../model/movie/movie_model.dart';
+import '../../../domain/entities/movie.dart';
+import '../../../domain/repositories/movie/movie_repository.dart';
+import '../../datasource/base_datasource.dart';
+import '../../model/movie/movie_model.dart';
 
 /// The implementation of the [MovieRepository]
 ///
@@ -38,16 +38,16 @@ class MovieRepositoryImpl extends MovieRepository {
   /// @return: a [Future] list of [Movie].
   ///
   /// See also
-  ///  - [BaseDatasource.fetchMovies] method.
+  ///  - [BaseDatasource.fetchData] method.
   ///  - [Movie.copyWith] method.
   @override
-  Future<List<Movie>> getMovies() async {
+  Future<List<Movie>> getListOfModel() async {
     List<MovieModel> favoriteMovieModels = [];
     try {
       favoriteMovieModels = await database.getMovies();
     } catch (_) {}
     if (movies.isEmpty) {
-      final List<MovieModel> movieModels = await datasource.fetchMovies();
+      final List<MovieModel> movieModels = await datasource.fetchData();
       movies = movieModels
           .map((e) => Movie(
               id: e.id,
@@ -125,7 +125,7 @@ class MovieRepositoryImpl extends MovieRepository {
 
 
   @override
-  Future<List<Movie>> getFavoriteMovies() async {
+  Future<List<Movie>> getFavoriteListOfModel() async {
     return (await database.getMovies())
         .map((e) => Movie(
               id: e.id,
@@ -143,7 +143,7 @@ class MovieRepositoryImpl extends MovieRepository {
   /// @return: a Future of [Movie]
   @override
   Future<Movie> getMovieDetail(Movie params) async {
-    var model = (await datasource.getMovieDetail(params));
+    var model = (await datasource.getDetails(params));
     return Movie(
       id: model.id,
       title: model.title,

@@ -1,30 +1,18 @@
+import 'package:tmdb_app/data/model/base_model.dart';
+
 /// A class that represents our Movie Api Model.
 ///
 /// See also
 /// - [MovieModel.fromJson] factory.
-class MovieModel {
-  /// The id of the [Movie]
-  final int id;
-
+class MovieModel extends BaseModel {
   /// The title of the [Movie]
   final String title;
 
-  /// The small description of the [Movie] can be empty.
-  final String overview;
-
-  /// The relative path representing the picture of the [Movie]
-  /// The base url isn't include inside
-  ///
-  /// See more
-  ///   - base_url, file_size and file_path
-  ///     explanation at : https://developer.themoviedb.org/docs/image-basics
-  final String posterPath;
-
   MovieModel({
-    required this.id,
+    required super.id,
     required this.title,
-    required this.overview,
-    required this.posterPath,
+    required super.overview,
+    required super.posterPath,
   });
 
   /// A factory for api json deserialization

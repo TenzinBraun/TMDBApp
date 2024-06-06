@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/http/app_client.dart';
 import '../../../domain/entities/movie.dart';
-import '../../providers/movie/movie_notifier.dart';
-import '../../providers/movie/movie_provider.dart';
+import '../../providers/shared/shared_provider.dart';
 import '../../widgets/async_notifier_builder.dart';
 
 part '__detail_movie_item_holder.dart';
