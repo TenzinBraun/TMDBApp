@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tmdb_app/domain/usecases/movies/show_detail_movie.dart';
 
 import '../../../config/navigation/app_routing.dart';
 import '../../../domain/entities/movie.dart';
@@ -28,6 +29,12 @@ class LoadedMoviesState extends MovieState {
   LoadedMoviesState({required this.movies});
 }
 
+class ShowDetailState extends MovieState {
+  final Movie movie;
+
+  ShowDetailState({required this.movie});
+}
+
 /// The [Movie] notifier that use [MovieUseCase] to trigger event.
 class MovieNotifier extends AsyncNotifier<MovieState> {
 
@@ -36,6 +43,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
 
   /// The temporary list of favorite [Movie] fetched by [getFavoriteMovies].
   List<Movie> favoriteMovies = [];
+  String lastRoute = AppRouting.home;
 
   /// The [Movie] useCase.
   MovieUseCase get movieUseCase => ref.read(movieUseCaseProvider);
@@ -66,7 +74,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
     });
   }
 
-  /// call the [MovieUseCase] and update the movie selected.
+  /// Call the [MovieUseCase] and update the movie selected.
   ///
   /// Then update the state using the [fromRoute] parameters.
   ///
@@ -76,6 +84,29 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   FutureOr<void> setFavorite(Movie movie, String fromRoute) async {
     await movieUseCase.call<SetFavoriteMovie, Movie>(movie);
     if (fromRoute == AppRouting.home) {
+      await getMovies();
+    } else {
+      await getFavoriteMovies();
+    }
+  }
+
+
+  /// Call the  call the [MovieUseCase] to get the detail of a [Movie].
+  ///
+  /// Stored the last [fromRoute] to ensure good pop back and state handle
+  ///
+  /// @params: [movie], [fromRoute]
+  FutureOr<void> showDetailMovie(Movie movie, String fromRoute) async {
+    lastRoute = fromRoute;
+    state = await AsyncValue.guard<ShowDetailState>(() async {
+      movie = await movieUseCase.call<ShowDetailMovie, Movie>(movie);
+      return ShowDetailState(movie: movie);
+    });
+  }
+
+  /// Method invoke when back button is pressed.
+  FutureOr<void> popBack() async {
+    if (lastRoute == AppRouting.home) {
       await getMovies();
     } else {
       await getFavoriteMovies();

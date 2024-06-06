@@ -1,8 +1,7 @@
+import '../../domain/entities/movie.dart';
 import '../model/movie/movie_model.dart';
 import '../model/movie/page_movie_model.dart';
 import 'base_datasource.dart';
-
-
 
 /// The datasource the handle the api logic of [Movie] features
 ///
@@ -10,7 +9,6 @@ import 'base_datasource.dart';
 ///  - [featuredRoute] properties
 ///  - [fetchMovies] method
 class MovieDatasource extends BaseDatasource {
-
   /// @override [featuredRoute] of [BaseDatasource] to match the wanted api feature
   @override
   String get featuredRoute => "/movie";
@@ -32,12 +30,33 @@ class MovieDatasource extends BaseDatasource {
       "language": "fr-FR",
     };
     try {
-      final dioResponse =
-          await client.get(featuredRoute, queryParameters: queryParameters);
+      final dioResponse = await client.get("/discover/$featuredRoute",
+          queryParameters: queryParameters);
       final pageMovieModel = PageMoviesModel.fromJson(dioResponse.data);
       return pageMovieModel.results.take(10).toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<MovieModel> getMovieDetail(Movie movie) async {
+    final Map<String, String> queryParameters = {
+      "include_adult": "false",
+      "language": "fr-FR",
+    };
+    try {
+      final dioResponse = await client.get(
+        "$featuredRoute/${movie.id}",
+        queryParameters: queryParameters,
+      );
+      return MovieModel.fromJson(dioResponse.data);
+    } on Exception catch (e) {
+      return MovieModel(
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        posterPath: movie.posterPath,
+      );
     }
   }
 }
