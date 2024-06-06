@@ -125,6 +125,7 @@ class MovieRepositoryImpl extends MovieRepository {
     return await database.setMovie(movieModel);
   }
 
+
   @override
   Future<List<Movie>> getFavoriteMovies() async {
     return (await database.getMovies())

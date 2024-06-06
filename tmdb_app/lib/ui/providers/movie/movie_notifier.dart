@@ -74,7 +74,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
     });
   }
 
-  /// call the [MovieUseCase] and update the movie selected.
+  /// Call the [MovieUseCase] and update the movie selected.
   ///
   /// Then update the state using the [fromRoute] parameters.
   ///
@@ -90,6 +90,12 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
     }
   }
 
+
+  /// Call the  call the [MovieUseCase] to get the detail of a [Movie].
+  ///
+  /// Stored the last [fromRoute] to ensure good pop back and state handle
+  ///
+  /// @params: [movie], [fromRoute]
   FutureOr<void> showDetailMovie(Movie movie, String fromRoute) async {
     lastRoute = fromRoute;
     state = await AsyncValue.guard<ShowDetailState>(() async {
@@ -98,6 +104,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
     });
   }
 
+  /// Method invoke when back button is pressed.
   FutureOr<void> popBack() async {
     if (lastRoute == AppRouting.home) {
       await getMovies();

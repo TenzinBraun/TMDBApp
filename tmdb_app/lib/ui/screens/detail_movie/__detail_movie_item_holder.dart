@@ -16,6 +16,7 @@ class DetailMovieItemHolder extends StatelessWidget {
           children: [
             Image.network(
               "${AppClient.imageUrl}${movie.posterPath}",
+              gaplessPlayback: true,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -23,7 +24,10 @@ class DetailMovieItemHolder extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Text(movie.overview, textAlign: TextAlign.center, ),
+              child: Text(
+                movie.overview,
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),

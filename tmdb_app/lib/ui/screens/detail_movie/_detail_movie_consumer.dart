@@ -8,16 +8,17 @@ class DetailMovieConsumer extends ConsumerWidget {
     return PopScope(
       canPop: true,
       onPopInvoked: (hasPop) async {
-          ref.read(movieProvider.notifier).popBack();
-        },
+        ref.read(movieProvider.notifier).popBack();
+      },
       child: AsyncNotifierBuilder(
-          provider: movieProvider,
-          builder: (context, state) {
-            if (state is ShowDetailState) {
-              return DetailMovieItemHolder(movie: state.movie);
-            }
-            return const SizedBox();
-          }),
+        provider: movieProvider,
+        builder: (context, state) {
+          if (state is ShowDetailState) {
+            return DetailMovieItemHolder(movie: state.movie);
+          }
+          return const SizedBox();
+        },
+      ),
     );
   }
 }

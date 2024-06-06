@@ -18,7 +18,10 @@ class MoviesConsumerWidget extends ConsumerWidget {
               ),
             );
           }
-          return LoadedMovies(movies: state.movies, fromRoute: AppRouting.home);
+          return LoadedMovies(
+            movies: state.movies,
+            fromRoute: AppRouting.home,
+          );
         }
         return const SizedBox();
       },
