@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AsyncNotifierBuilder<Notifier extends AsyncNotifier<State>, State>
     extends ConsumerWidget {
+
   final AsyncNotifierProvider<Notifier, State> provider;
 
   const AsyncNotifierBuilder({

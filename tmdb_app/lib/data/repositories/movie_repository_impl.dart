@@ -1,3 +1,5 @@
+import 'package:tmdb_app/data/database/movie_database.dart';
+
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasource/base_datasource.dart';
@@ -21,10 +23,18 @@ class MovieRepositoryImpl extends MovieRepository {
 
   MovieRepositoryImpl({required super.datasource, required super.database});
 
-  /// A method that get movies from the [datasource]
-  /// and normalize api models to app entities.
+  /// A method that retrieve all the [Movie]
   ///
-  /// Stores the normalized object inside [movies]
+  /// Get all the [MovieModel] from [database]
+  ///
+  /// Check if local [movies] are empty.
+  /// True: fetch the list of [MovieModel] from [datasource]
+  /// normalize [MovieModel] to [Movie] with [Movie.isFavorite] to true
+  /// when the current [MovieModel] processed from the [datasource] has a matching id
+  /// in the [database].
+  /// False:
+  /// update [Movie.isFavorite] from [movies] from corresponding id in [database]
+  ///
   ///
   /// @params: empty.
   /// @return: a [Future] list of [Movie].
@@ -76,8 +86,10 @@ class MovieRepositoryImpl extends MovieRepository {
 
   /// A method that set a movie as favorite.
   ///
-  /// Find the [index] of the [movie] marked as favorite.
-  /// Update the [movies] at [index] with [Movie.isFavorite] as its opposite
+  /// Retrieve all the [Movie] from [database].
+  /// Check if the movie is already stored
+  /// True: delete the [Movie] as it implies the user unselected it
+  /// False: Add the [Movie] in the database
   ///
   /// @params: a [movie] of [Movie].
   /// @return: a [Future].
