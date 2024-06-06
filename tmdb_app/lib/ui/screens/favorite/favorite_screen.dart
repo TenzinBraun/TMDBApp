@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_app/config/navigation/app_routing.dart';
-import 'package:tmdb_app/ui/providers/movie/movie_notifier.dart';
 import 'package:tmdb_app/ui/widgets/async_notifier_builder.dart';
 
-import '../../providers/movie/movie_provider.dart';
+import '../../providers/shared/shared_provider.dart';
 import '../../widgets/bottom_app_bar_widget.dart';
 import '../home/home_screen.dart';
 

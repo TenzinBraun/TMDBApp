@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:tmdb_app/data/model/base_model.dart';
 
 import '../../config/http/app_client.dart';
+import '../../domain/entities/movie.dart';
 import '../model/movie/movie_model.dart';
-
-
 
 /// The abstract class that represents
 /// the minimal datasource configuration for the wanted feature.
@@ -11,9 +11,8 @@ import '../model/movie/movie_model.dart';
 /// See also
 ///   - [AppClient.dio] properties.
 ///   - [featuredRoute] properties.
-///   - [fetchMovies] method.
-abstract class BaseDatasource {
-
+///   - [fetchData] method.
+abstract class BaseDatasource<Model extends BaseModel, Entity> {
   /// The client with the base configuration for api request.
   Dio client = AppClient.dio;
 
@@ -21,7 +20,9 @@ abstract class BaseDatasource {
   ///
   /// @params: empty.
   /// @return: a [Future] of list of [MovieModel]
-  Future<List<MovieModel>> fetchMovies();
+  Future<List<Model>> fetchData();
+
+  Future<Model> getDetails(Entity model);
 
   /// the featured route implemented with the datasource.
   String get featuredRoute;

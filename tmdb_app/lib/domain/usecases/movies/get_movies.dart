@@ -1,6 +1,6 @@
 
 import '../../entities/movie.dart';
-import '../../repositories/movie_repository.dart';
+import '../../repositories/movie/movie_repository.dart';
 import '../use_case.dart';
 
 /// A class with the only purpose of retrieving movies through [MovieRepository].
@@ -23,6 +23,6 @@ class GetMovies implements UseCase<List<Movie>, NoParams> {
   /// - @return: A [Future] that completes with a [List] of [Movie].
   @override
   Future<List<Movie>> call(NoParams params) async {
-    return await movieRepository.getMovies();
+    return await movieRepository.getListOfModel();
   }
 }
