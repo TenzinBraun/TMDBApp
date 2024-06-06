@@ -1,5 +1,3 @@
-import 'package:tmdb_app/data/database/movie_database.dart';
-
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasource/base_datasource.dart';
