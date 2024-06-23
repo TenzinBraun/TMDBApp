@@ -11,6 +11,7 @@ import 'package:tmdb_app/data/datasource/movie_datasource.dart';
 import 'package:tmdb_app/data/model/movie/movie_model.dart';
 import 'package:tmdb_app/data/repositories/movie_repository_impl.dart';
 import 'package:tmdb_app/domain/entities/movie.dart';
+import 'package:tmdb_app/services/env_service.dart';
 import 'package:tmdb_app/ui/providers/movie/movie_notifier.dart';
 
 class MockMovieRepository extends MovieRepositoryImpl with Mock {
@@ -45,7 +46,8 @@ void main() {
   late ProviderContainer container;
   late Listener listener;
   final MockSharedPreferences mockSharedPreferences = MockSharedPreferences();
-  setUpAll(() {
+  setUpAll(() async {
+    await EnvService.loadEnvApiKey();
     SharedPreferences.setMockInitialValues({"favorite_movie": []});
 
     container = ProviderContainer(overrides: [
