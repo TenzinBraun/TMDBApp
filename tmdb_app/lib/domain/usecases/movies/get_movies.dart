@@ -1,7 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tmdb_app/data/repositories/movie_repository_impl.dart';
 
+import '../../../ui/providers/movie/movie_provider.dart';
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
 import '../use_case.dart';
+
+part 'get_movies.g.dart';
+
+
+@riverpod
+GetMovies getMovies(GetMoviesRef ref){
+  return GetMovies(movieRepository: ref.watch(movieRepositoryImplProvider));
+}
 
 /// A class with the only purpose of retrieving movies through [MovieRepository].
 ///

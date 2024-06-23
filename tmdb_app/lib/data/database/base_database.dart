@@ -6,6 +6,6 @@ abstract class BaseDatabase {
   Future<List<MovieModel>> getMovies();
 
   Future<void> setMovie(MovieModel movie);
-  Future<void> remove(MovieModel movie);
+  Future<void> removeItem(MovieModel movie);
   Future<void> setMovies(List<MovieModel> movies);
 }

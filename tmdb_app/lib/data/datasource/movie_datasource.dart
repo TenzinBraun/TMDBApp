@@ -1,7 +1,18 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../domain/entities/movie.dart';
 import '../model/movie/movie_model.dart';
 import '../model/movie/page_movie_model.dart';
 import 'base_datasource.dart';
+
+
+part 'movie_datasource.g.dart';
+
+
+@riverpod
+MovieDatasource movieDatasource(MovieDatasourceRef ref) {
+  return MovieDatasource();
+}
 
 /// The datasource the handle the api logic of [Movie] features
 ///

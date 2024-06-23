@@ -1,6 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../data/repositories/movie_repository_impl.dart';
+import '../../../ui/providers/movie/movie_provider.dart';
 import '../../entities/movie.dart';
 import '../../repositories/movie_repository.dart';
 import '../use_case.dart';
+
+part 'get_favorite_movies.g.dart';
+
+@riverpod
+GetFavoriteMovies getFavoriteMovies(GetFavoriteMoviesRef ref){
+  return GetFavoriteMovies(movieRepository: ref.watch(movieRepositoryImplProvider));
+}
+
 
 /// A class with the only purpose of retrieving favorite movies through [MovieRepository].
 ///

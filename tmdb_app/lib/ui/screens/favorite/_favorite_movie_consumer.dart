@@ -5,10 +5,10 @@ class FavoriteMovieConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(movieProvider.notifier).getFavoriteMovies();
+    ref.read(movieNotifierProvider.notifier).getFavoriteMovies();
 
     return AsyncNotifierBuilder(
-        provider: movieProvider,
+        provider: movieNotifierProvider,
         builder: (context, state) {
           if (state is LoadedMoviesState) {
             if (state.movies.isEmpty) {

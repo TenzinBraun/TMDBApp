@@ -14,7 +14,7 @@ class MovieItemHolder extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        ref.read(movieProvider.notifier).showDetailMovie(movie, fromRoute);
+        ref.read(movieNotifierProvider.notifier).showDetailMovie(movie, fromRoute);
         Navigator.of(context).pushNamed(AppRouting.detail);
       },
       child: Card(

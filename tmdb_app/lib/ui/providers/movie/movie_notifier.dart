@@ -1,16 +1,14 @@
-import 'dart:async';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tmdb_app/domain/usecases/movies/get_favorite_movies.dart';
+import 'package:tmdb_app/domain/usecases/movies/get_movies.dart';
 import 'package:tmdb_app/domain/usecases/movies/show_detail_movie.dart';
 
 import '../../../config/navigation/app_routing.dart';
 import '../../../domain/entities/movie.dart';
-import '../../../domain/usecases/movies/get_favorite_movies.dart';
-import '../../../domain/usecases/movies/get_movies.dart';
-import '../../../domain/usecases/movies/movie_use_case.dart';
 import '../../../domain/usecases/movies/set_favorite_movie.dart';
 import '../../../domain/usecases/use_case.dart';
-import 'movie_provider.dart';
+
+part 'movie_notifier.g.dart';
 
 /// The class that represents the MovieBaseState.
 abstract class MovieState {}
@@ -36,8 +34,9 @@ class ShowDetailState extends MovieState {
 }
 
 /// The [Movie] notifier that use [MovieUseCase] to trigger event.
-class MovieNotifier extends AsyncNotifier<MovieState> {
-
+///
+@riverpod
+class MovieNotifier extends _$MovieNotifier {
   /// The temporary list of [Movie] fetched by [getMovies].
   List<Movie> movies = [];
 
@@ -45,29 +44,24 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   List<Movie> favoriteMovies = [];
   String lastRoute = AppRouting.home;
 
-  /// The [Movie] useCase.
-  MovieUseCase get movieUseCase => ref.read(movieUseCaseProvider);
-
-  @override
-  FutureOr<MovieState> build() => InitialMovieState();
 
   /// call the [MovieUseCase] and update the state to [LoadedMoviesState]
   /// with a list of [Movie].
   FutureOr<void> getMovies() async {
-    state = await AsyncValue.guard<LoadedMoviesState>(() async {
-      movies = await movieUseCase.call<GetMovies, NoParams>(NoParams());
-      return LoadedMoviesState(
-        movies: movies,
-      );
-    });
+    state = await AsyncValue.guard<LoadedMoviesState>(
+      () async {
+        return LoadedMoviesState(
+          movies: await ref.read(getMoviesProvider)(NoParams()),
+        );
+      },
+    );
   }
 
   /// call the [MovieUseCase] and update the state to [LoadedMoviesState]
   /// with a list of favorite [Movie].
   FutureOr<void> getFavoriteMovies() async {
     state = await AsyncValue.guard<LoadedMoviesState>(() async {
-      favoriteMovies =
-      await movieUseCase.call<GetFavoriteMovies, NoParams>(NoParams());
+      favoriteMovies = await ref.read(getFavoriteMoviesProvider)(NoParams());
       return LoadedMoviesState(
         movies: favoriteMovies,
       );
@@ -82,14 +76,13 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   ///   - [movie] of [Movie] the movie selected.
   ///   - [fromRoute] of [String] the route from where the movie was selected.
   FutureOr<void> setFavorite(Movie movie, String fromRoute) async {
-    await movieUseCase.call<SetFavoriteMovie, Movie>(movie);
+    await ref.read(setFavoriteMovieProvider)(movie);
     if (fromRoute == AppRouting.home) {
       await getMovies();
     } else {
       await getFavoriteMovies();
     }
   }
-
 
   /// Call the  call the [MovieUseCase] to get the detail of a [Movie].
   ///
@@ -99,7 +92,7 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
   FutureOr<void> showDetailMovie(Movie movie, String fromRoute) async {
     lastRoute = fromRoute;
     state = await AsyncValue.guard<ShowDetailState>(() async {
-      movie = await movieUseCase.call<ShowDetailMovie, Movie>(movie);
+      movie = await ref.read(showDetailMovieProvider)(movie);
       return ShowDetailState(movie: movie);
     });
   }
@@ -112,4 +105,11 @@ class MovieNotifier extends AsyncNotifier<MovieState> {
       await getFavoriteMovies();
     }
   }
+
+  @override
+  FutureOr<MovieState> build() {
+    return InitialMovieState();
+  }
 }
+
+
