@@ -23,6 +23,11 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.22.1' # specify your desired Flutter version
+    
+    - name: Create .env file
+      run: |
+        echo "API_KEY=${{ secrets.API_KEY }}" > .env
+      working-directory: ./tmdb_app/  # Update this if your Flutter project is in a subdirectory
 
     - name: Install dependencies
       run: flutter pub get --no-precompile
