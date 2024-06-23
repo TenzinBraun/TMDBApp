@@ -33,7 +33,7 @@ jobs:
         working-directory: ./tmdb_app/
 
       - name: build runner dependencies
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: flutter pub run build_runner build --delete-conflicting-outputs
         working-directory: ./tmdb_app/
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
