@@ -34,4 +34,4 @@ jobs:
 
     - name: Run tests
       run: flutter test
-      working-directory: ./tmdb_app/  # Update this if your Flutter project is in a subdirectory
+      working-directory: ./tmdb_app/   # Update this if your Flutter project is in a subdirectory
