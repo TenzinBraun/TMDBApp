@@ -11,7 +11,7 @@ class FavoriteWidgetConsumer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
-        ref.read(movieProvider.notifier).setFavorite(movie, fromRoute);
+        ref.read(movieNotifierProvider.notifier).setFavorite(movie, fromRoute);
       },
       icon: Icon(
         movie.isFavorite

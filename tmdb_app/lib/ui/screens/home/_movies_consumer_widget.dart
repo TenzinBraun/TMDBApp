@@ -5,9 +5,9 @@ class MoviesConsumerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(movieProvider.notifier).getMovies();
+    ref.read(movieNotifierProvider.notifier).getMovies();
     return AsyncNotifierBuilder<MovieNotifier, MovieState>(
-      provider: movieProvider,
+      provider: movieNotifierProvider,
       builder: (context, state) {
         if (state is LoadedMoviesState) {
           if (state.movies.isEmpty) {

@@ -1,7 +1,21 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tmdb_app/data/database/movie_database.dart';
+import 'package:tmdb_app/data/datasource/movie_datasource.dart';
+
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasource/base_datasource.dart';
 import '../model/movie/movie_model.dart';
+
+part 'movie_repository_impl.g.dart';
+
+@riverpod
+MovieRepositoryImpl movieRepositoryImpl(MovieRepositoryImplRef ref) {
+  return MovieRepositoryImpl(
+    datasource: ref.watch(movieDatasourceProvider),
+    database: ref.watch(movieDatabaseProvider),
+  );
+}
 
 /// The implementation of the [MovieRepository]
 ///
@@ -45,7 +59,9 @@ class MovieRepositoryImpl extends MovieRepository {
     List<MovieModel> favoriteMovieModels = [];
     try {
       favoriteMovieModels = await database.getMovies();
-    } catch (_) {}
+    } catch (e) {
+      print("error $e");
+    }
     if (movies.isEmpty) {
       final List<MovieModel> movieModels = await datasource.fetchMovies();
       movies = movieModels
@@ -117,12 +133,11 @@ class MovieRepositoryImpl extends MovieRepository {
         favoriteMoviesStored.where((e) => e.id == movie.id).isNotEmpty;
 
     if (isMovieStored) {
-      await database.remove(movieModel);
+      await database.removeItem(movieModel);
       return;
     }
     return await database.setMovie(movieModel);
   }
-
 
   @override
   Future<List<Movie>> getFavoriteMovies() async {

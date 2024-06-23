@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AsyncNotifierBuilder<Notifier extends AsyncNotifier<State>, State>
+class AsyncNotifierBuilder<Notifier extends AutoDisposeAsyncNotifier<State>, State>
     extends ConsumerWidget {
 
-  final AsyncNotifierProvider<Notifier, State> provider;
+  final AutoDisposeAsyncNotifierProvider<Notifier, State> provider;
 
   const AsyncNotifierBuilder({
     super.key,
